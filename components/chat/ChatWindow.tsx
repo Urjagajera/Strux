@@ -26,7 +26,7 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
     
     const loadHistory = async () => {
       try {
-        const res = await fetch(`/api/chat/history?mode=${mode}&limit=4`);
+        const res = await fetch(`/api/chat/history?mode=${mode}&limit=20`);
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         
@@ -60,7 +60,11 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    const userMessage: Message = { role: "user", content: input };
+    const userMessage: Message = { 
+      role: "user", 
+      content: input,
+      created_at: new Date().toISOString()
+    };
     const currentMessages = [...messages, userMessage];
     setMessages(currentMessages);
     setInput("");
@@ -76,7 +80,11 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
       if (!response.ok) throw new Error("Failed to fetch");
 
       const data = await response.json();
-      const assistantMessage: Message = { role: "assistant", content: data.message };
+      const assistantMessage: Message = { 
+        role: "assistant", 
+        content: data.message,
+        created_at: new Date().toISOString()
+      };
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
       console.error(error);
