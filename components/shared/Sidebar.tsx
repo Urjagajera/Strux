@@ -11,7 +11,10 @@ import {
   Calendar, 
   Settings, 
   LogOut,
-  Milestone
+  Milestone,
+  BarChart2,
+  Timer,
+  CheckCircle2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
@@ -24,6 +27,9 @@ const items = [
   { name: "Tasks", href: "/tasks", icon: CheckSquare },
   { name: "Notes", href: "/notes", icon: FileText },
   { name: "Calendar", href: "/calendar", icon: Calendar },
+  { name: "Weekly Report", href: "/report", icon: BarChart2 },
+  { name: "Focus", href: "/focus", icon: Timer },
+  { name: "Habits", href: "/habits", icon: CheckCircle2 },
 ];
 
 type SidebarProps = {

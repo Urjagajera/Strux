@@ -3,9 +3,14 @@ import { getTasks } from "@/actions/tasks";
 import { getNotes } from "@/actions/notes";
 import { getUserMemory } from "@/lib/memory/engine";
 import { createClient } from "@/lib/supabase/server";
-import { CheckSquare, Star, Zap, Calendar, FileText } from "lucide-react";
+import { CheckSquare, Star, Zap, Calendar, FileText, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import Groq from "groq-sdk";
+
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY!,
+});
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -47,6 +52,44 @@ export default async function DashboardPage() {
     return "Good evening";
   };
 
+  // AI Daily Briefing Logic
+  let dailyBrief = (memory as any)?.daily_brief;
+  const briefDate = (memory as any)?.brief_date;
+
+  if (briefDate !== todayStr) {
+    const briefingPrompt = `
+Generate a warm and motivating 3-4 sentence morning briefing for ${memory?.name || "the user"}.
+Today is ${now.toLocaleDateString('en-US', { weekday: 'long' })}.
+Pending tasks: ${pendingTasks.map(t => t.title).join(', ')}
+Upcoming deadlines: ${tasks.filter(t => t.due_date && t.status !== 'done').slice(0, 3).map(t => `${t.title} on ${t.due_date}`).join(', ')}
+User's goals: ${memory?.goals || "Not set yet"}
+
+The briefing should be persona-based (Strux Assistant), encouraging, and focus on 1-2 key things for today.
+    `;
+
+    try {
+      const completion = await groq.chat.completions.create({
+        model: "llama-3.3-70b-versatile",
+        messages: [{ role: "user", content: briefingPrompt }],
+        max_tokens: 200,
+      });
+
+      dailyBrief = completion.choices[0].message.content;
+
+      // Cache it
+      await supabase
+        .from("user_memory")
+        .update({
+          daily_brief: dailyBrief,
+          brief_date: todayStr
+        })
+        .eq("user_id", session.user.id);
+    } catch (e) {
+      console.error("Failed to generate briefing", e);
+      dailyBrief = "Ready to conquer the day? Let's focus on your top priorities and make today count!";
+    }
+  }
+
   return (
     <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-8 pb-20">
       {/* SECTION 1: Welcome Bar */}
@@ -65,6 +108,19 @@ export default async function DashboardPage() {
           </p>
         </div>
       </header>
+
+      {/* AI Daily Briefing Section */}
+      <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 shadow-sm flex flex-col md:flex-row gap-6 items-center">
+        <div className="h-12 w-12 rounded-2xl bg-[var(--accent)]/10 border border-[var(--accent)]/20 flex items-center justify-center text-[var(--accent)] shrink-0">
+          <Sparkles size={24} />
+        </div>
+        <div className="space-y-1 text-center md:text-left">
+          <h2 className="text-xs font-black uppercase tracking-widest text-[var(--accent)]">Your Daily Briefing</h2>
+          <p className="text-sm font-medium text-[var(--text)] leading-relaxed italic">
+            "{dailyBrief}"
+          </p>
+        </div>
+      </div>
 
       {/* SECTION 2: Stats Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

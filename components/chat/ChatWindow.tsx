@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Send, Loader2 } from "lucide-react";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
 import { format, isToday, isYesterday } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -148,7 +149,61 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
                       )}
                     >
                       <div className="prose prose-invert max-w-none text-inherit leading-relaxed">
-                        <ReactMarkdown>
+                        <ReactMarkdown 
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            code({ node, inline, className, children, ...props }: any) {
+                              const match = /language-(\w+)/.exec(className || '')
+                              return !inline ? (
+                                <pre className="bg-slate-800 rounded-lg p-4 overflow-x-auto my-2">
+                                  <code className={`text-sm text-slate-100 ${className}`} {...props}>
+                                    {children}
+                                  </code>
+                                </pre>
+                              ) : (
+                                <code className="bg-slate-700 rounded px-1.5 py-0.5 text-sm text-slate-100" {...props}>
+                                  {children}
+                                </code>
+                              )
+                            },
+                            h1: ({ children }) => (
+                              <h1 className="text-lg font-bold mt-4 mb-2 text-[var(--text)]">{children}</h1>
+                            ),
+                            h2: ({ children }) => (
+                              <h2 className="text-base font-bold mt-3 mb-2 text-[var(--text)]">{children}</h2>
+                            ),
+                            h3: ({ children }) => (
+                              <h3 className="text-sm font-semibold mt-2 mb-1 text-[var(--text)]">{children}</h3>
+                            ),
+                            p: ({ children }) => (
+                              <p className="mb-2 leading-relaxed text-sm">{children}</p>
+                            ),
+                            ul: ({ children }) => (
+                              <ul className="list-disc list-inside mb-2 space-y-1 text-sm">{children}</ul>
+                            ),
+                            ol: ({ children }) => (
+                              <ol className="list-decimal list-inside mb-2 space-y-1 text-sm">{children}</ol>
+                            ),
+                            blockquote: ({ children }) => (
+                              <blockquote className="border-l-2 border-[var(--accent)] pl-3 my-2 text-[var(--text-muted)] italic text-sm">
+                                {children}
+                              </blockquote>
+                            ),
+                            table: ({ children }) => (
+                              <div className="overflow-x-auto my-2">
+                                <table className="min-w-full text-sm border border-[var(--border)] rounded-lg">
+                                  {children}
+                                </table>
+                              </div>
+                            ),
+                            th: ({ children }) => (
+                              <th className="px-3 py-2 bg-[var(--surface)] border border-[var(--border)] font-semibold text-left text-xs">{children}</th>
+                            ),
+                            td: ({ children }) => (
+                              <td className="px-3 py-2 border border-[var(--border)] text-xs">{children}</td>
+                            ),
+                          }}
+                        >
                           {m.content}
                         </ReactMarkdown>
                       </div>
