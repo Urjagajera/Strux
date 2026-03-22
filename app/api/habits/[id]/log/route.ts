@@ -4,13 +4,13 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id: habitId } = await params;
   const session = await auth();
   if (!session?.user?.id) return new Response("Unauthorized", { status: 401 });
 
   const { date } = await req.json();
-  const habitId = params.id;
   const supabase = await createClient();
 
   // Check if log exists
@@ -43,12 +43,12 @@ export async function POST(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id: habitId } = await params;
   const session = await auth();
   if (!session?.user?.id) return new Response("Unauthorized", { status: 401 });
 
-  const habitId = params.id;
   const supabase = await createClient();
 
   // Delete logs first due to FK
