@@ -1,8 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { BarChart2, CheckCircle, Clock, FileText, Calendar, Award, ArrowRight } from "lucide-react";
+import { BarChart2, CheckCircle, Clock, FileText, Calendar, Award, ArrowRight, PieChart as PieIcon } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { 
+  BarChart, Bar, XAxis, YAxis, Tooltip,
+  PieChart, Pie, Cell, ResponsiveContainer, CartesianGrid
+} from "recharts";
+
+const COLORS = ["#3b82f6", "#1e293b"]; // accent vs border/muted
 
 export default function WeeklyReportPage() {
   const [report, setReport] = useState<any>(null);
@@ -25,60 +31,194 @@ export default function WeeklyReportPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--accent)]"></div>
+      <div className="flex items-center justify-center h-full bg-slate-950">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     );
   }
 
+  const pieData = [
+    { name: "Completed", value: report.completedCount || 0 },
+    { name: "Pending", value: report.pendingCount || 0 },
+  ];
+
   return (
-    <div className="p-4 md:p-8 max-w-5xl mx-auto space-y-8">
+    <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-12 pb-24 bg-slate-950 text-slate-100 min-h-screen">
       <header className="flex flex-col gap-2">
-        <h1 className="text-3xl font-black text-[var(--text)] tracking-tight">Weekly Performance</h1>
-        <p className="text-[var(--text-muted)] text-sm font-medium">Insights and progress from the last 7 days.</p>
+        <h1 className="text-4xl font-black tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">Weekly Performance</h1>
+        <p className="text-slate-500 text-sm font-bold uppercase tracking-widest">Efficiency & Logic Breakdown</p>
       </header>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: "Total Created", value: report.totalTasks, icon: Clock, color: "blue" },
-          { label: "Completed", value: report.completedTasks, icon: CheckCircle, color: "emerald" },
-          { label: "Pending", value: report.pendingTasks, icon: Award, color: "amber" },
-          { label: "New Notes", value: report.totalNotes, icon: FileText, color: "purple" },
+          { label: "Total Created", value: report.totalTasks, icon: Clock, color: "text-blue-500", bg: "bg-blue-500/10" },
+          { label: "Completed", value: report.completedTasks, icon: CheckCircle, color: "text-emerald-500", bg: "bg-emerald-500/10" },
+          { label: "Pending", value: report.pendingTasks, icon: Award, color: "text-amber-500", bg: "bg-amber-500/10" },
+          { label: "Knowledge Base", value: report.totalNotes, icon: FileText, color: "text-purple-500", bg: "bg-purple-500/10" },
         ].map((stat, i) => (
-          <div key={i} className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl shadow-sm space-y-3">
-            <div className={`h-10 w-10 rounded-xl bg-${stat.color}-500/10 flex items-center justify-center text-${stat.color}-500`}>
-              <stat.icon size={20} />
+          <div key={i} className="bg-slate-900/50 border border-slate-800 p-6 rounded-[2rem] shadow-xl space-y-4 hover:border-slate-700 transition-all group">
+            <div className={`h-12 w-12 rounded-2xl ${stat.bg} flex items-center justify-center ${stat.color} border border-white/5`}>
+              <stat.icon size={24} />
             </div>
             <div>
-              <p className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest">{stat.label}</p>
-              <h3 className="text-2xl font-black text-[var(--text)]">{stat.value}</h3>
+              <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{stat.label}</p>
+              <h3 className="text-3xl font-black">{stat.value}</h3>
             </div>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Most Active Day */}
-        <div className="lg:col-span-1 bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl shadow-sm space-y-4">
-          <div className="flex items-center gap-2">
-            <Calendar className="text-[var(--accent)]" size={20} />
-            <h2 className="text-sm font-bold uppercase tracking-tight">Most Active</h2>
+        {/* CHART 1: Tasks by day */}
+        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 p-8 rounded-[2.5rem] shadow-2xl space-y-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <BarChart2 size={18} />
+              </div>
+              <h2 className="text-sm font-black uppercase tracking-widest">Velocity by Day</h2>
+            </div>
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Tasks Created</span>
           </div>
-          <div className="flex flex-col items-center justify-center py-8 space-y-2">
-            <span className="text-4xl font-black text-[var(--accent)]">{report.mostActiveDay}</span>
-            <span className="text-xs text-[var(--text-muted)] font-medium italic">Peak productivity achieved</span>
+          
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={report.tasksByDay}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                <XAxis 
+                  dataKey="day" 
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 10, fontWeight: 800, fill: '#64748b' }}
+                  dy={10}
+                />
+                <YAxis 
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 10, fontWeight: 800, fill: '#64748b' }}
+                />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '1rem', fontSize: '12px' }}
+                  cursor={{ fill: '#1e293b', opacity: 0.4 }}
+                />
+                <Bar dataKey="count" fill="#3b82f6" radius={[6, 6, 0, 0]} barSize={40} />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
-        {/* AI Weekly Summary */}
-        <div className="lg:col-span-2 bg-[var(--accent)]/5 border border-[var(--accent)]/10 p-6 rounded-2xl shadow-sm space-y-4">
-          <div className="flex items-center gap-2">
-            <Award className="text-[var(--accent)]" size={20} />
-            <h2 className="text-sm font-bold uppercase tracking-tight text-[var(--accent)]">AI Weekly Insights</h2>
+        {/* CHART 2: Task completion rate */}
+        <div className="lg:col-span-1 bg-slate-900 border border-slate-800 p-8 rounded-[2.5rem] shadow-2xl space-y-8">
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <PieIcon size={18} />
+            </div>
+            <h2 className="text-sm font-black uppercase tracking-widest">Completion Mix</h2>
           </div>
-          <div className="prose prose-sm max-w-none text-[var(--text)] leading-relaxed">
-            <ReactMarkdown>{report.aiSummary}</ReactMarkdown>
+
+          <div className="h-48 w-full relative">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={pieData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={80}
+                  paddingAngle={8}
+                  dataKey="value"
+                >
+                  {pieData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '1rem', fontSize: '12px' }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <span className="text-xl font-black">{Math.round((report.completedCount / (report.totalTasks || 1)) * 100)}%</span>
+              <span className="text-[8px] font-black text-slate-500 uppercase tracking-tighter">Done</span>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex justify-between items-center p-3 bg-slate-950/50 rounded-2xl border border-slate-800">
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-primary" />
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Completed</span>
+              </div>
+              <span className="text-xs font-black">{report.completedCount}</span>
+            </div>
+            <div className="flex justify-between items-center p-3 bg-slate-950/50 rounded-2xl border border-slate-800">
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-slate-800" />
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Pending</span>
+              </div>
+              <span className="text-xs font-black">{report.pendingCount}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* CHART 3: Focus Time by day */}
+        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 p-8 rounded-[2.5rem] shadow-2xl space-y-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500">
+                <Clock size={18} />
+              </div>
+              <h2 className="text-sm font-black uppercase tracking-widest">Focus Intensity</h2>
+            </div>
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Minutes Focused</span>
+          </div>
+
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={report.focusByDay}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                <XAxis 
+                  dataKey="day" 
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 10, fontWeight: 800, fill: '#64748b' }}
+                  dy={10}
+                />
+                <YAxis 
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 10, fontWeight: 800, fill: '#64748b' }}
+                />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '1rem', fontSize: '12px' }}
+                  cursor={{ fill: '#1e293b', opacity: 0.4 }}
+                />
+                <Bar dataKey="minutes" fill="#f97316" radius={[6, 6, 0, 0]} barSize={40} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* AI INSIGHTS */}
+        <div className="lg:col-span-1 bg-primary border border-primary/20 p-8 rounded-[2.5rem] shadow-2xl shadow-primary/20 space-y-6 flex flex-col justify-between">
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-xl bg-white/20 flex items-center justify-center text-white">
+                <Award size={18} />
+              </div>
+              <h2 className="text-sm font-black uppercase tracking-widest text-white">Coach Insights</h2>
+            </div>
+            <div className="text-sm font-bold text-white/90 leading-relaxed italic">
+              <ReactMarkdown>{report.aiSummary}</ReactMarkdown>
+            </div>
+          </div>
+          
+          <div className="pt-6 border-t border-white/10">
+            <div className="flex items-center justify-between text-white/60">
+              <span className="text-[10px] font-black uppercase tracking-widest">Top Day</span>
+              <span className="text-xs font-black text-white">{report.mostActiveDay}</span>
+            </div>
           </div>
         </div>
       </div>

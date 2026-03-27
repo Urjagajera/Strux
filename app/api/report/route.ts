@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import Groq from "groq-sdk";
+import { format, startOfDay, subDays, eachDayOfInterval } from "date-fns";
 
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY!,
@@ -12,43 +13,65 @@ export async function GET() {
   if (!session?.user?.id) return new Response("Unauthorized", { status: 401 });
 
   const supabase = await createClient();
-  const lastWeek = new Date();
-  lastWeek.setDate(lastWeek.getDate() - 7);
-  const lastWeekStr = lastWeek.toISOString();
+  const now = new Date();
+  const sevenDaysAgo = startOfDay(subDays(now, 6));
+  const sevenDaysAgoStr = sevenDaysAgo.toISOString();
 
   // Fetch tasks from last 7 days
   const { data: tasks } = await supabase
     .from("tasks")
     .select("*")
     .eq("user_id", session.user.id)
-    .gte("created_at", lastWeekStr);
+    .gte("created_at", sevenDaysAgoStr);
+
+  // Fetch focus sessions from last 7 days
+  const { data: focusSessions } = await supabase
+    .from("focus_sessions")
+    .select("*")
+    .eq("user_id", session.user.id)
+    .gte("session_date", format(sevenDaysAgo, "yyyy-MM-dd"));
 
   // Fetch notes from last 7 days
   const { data: notes } = await supabase
     .from("notes")
     .select("*")
     .eq("user_id", session.user.id)
-    .gte("created_at", lastWeekStr);
+    .gte("created_at", sevenDaysAgoStr);
 
   const completedTasks = tasks?.filter(t => t.status === 'done')?.length || 0;
   const pendingTasks = tasks?.filter(t => t.status !== 'done')?.length || 0;
   const totalTasks = tasks?.length || 0;
   const totalNotes = notes?.length || 0;
 
-  // Find most active day
-  const days: { [key: string]: number } = {};
-  tasks?.forEach(t => {
-    const day = new Date(t.created_at).toLocaleDateString('en-US', { weekday: 'long' });
-    days[day] = (days[day] || 0) + 1;
+  // Prepare chart data - Tasks by day
+  const days = eachDayOfInterval({
+    start: sevenDaysAgo,
+    end: now,
   });
+
+  const tasksByDay = days.map(date => {
+    const dayStr = format(date, "EEE");
+    const count = tasks?.filter(t => format(new Date(t.created_at), "yyyy-MM-dd") === format(date, "yyyy-MM-dd")).length || 0;
+    return { day: dayStr, count };
+  });
+
+  // Prepare chart data - Focus by day
+  const focusByDay = days.map(date => {
+    const dayStr = format(date, "EEE");
+    const minutes = focusSessions?.filter(s => s.session_date === format(date, "yyyy-MM-dd"))
+      .reduce((acc, s) => acc + s.duration_minutes, 0) || 0;
+    return { day: dayStr, minutes };
+  });
+
+  // Find most active day
   let mostActiveDay = "None";
   let maxCount = 0;
-  for (const day in days) {
-    if (days[day] > maxCount) {
-      maxCount = days[day];
-      mostActiveDay = day;
+  tasksByDay.forEach(d => {
+    if (d.count > maxCount) {
+      maxCount = d.count;
+      mostActiveDay = d.day;
     }
-  }
+  });
 
   // Generate AI Summary using Groq
   const summaryPrompt = `
@@ -58,6 +81,7 @@ Completed: ${completedTasks}
 Pending: ${pendingTasks}
 Notes created: ${totalNotes}
 Most active day: ${mostActiveDay}
+Total Focus Time: ${focusByDay.reduce((acc, d) => acc + d.minutes, 0)} minutes
 
 Also give 2 bullet points for "Next Week Suggestions".
 `;
@@ -76,6 +100,10 @@ Also give 2 bullet points for "Next Week Suggestions".
     pendingTasks,
     totalNotes,
     mostActiveDay,
-    aiSummary
+    aiSummary,
+    tasksByDay,
+    focusByDay,
+    completedCount: completedTasks,
+    pendingCount: pendingTasks
   });
 }

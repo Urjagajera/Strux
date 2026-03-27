@@ -228,37 +228,65 @@ Recent Context:
   try {
     // A. Task Extraction
     const extractionPrompt = `
-Analyze this user message and extract task information.
-User message: "${lastUserMessage.content}"
+Analyze this user message carefully.
+Message: "${lastUserMessage.content}"
 
-If this message contains a task, project, or deadline, respond with JSON only:
+Only extract a task if the user is CLEARLY and 
+EXPLICITLY stating they need to DO something with 
+a specific title and/or deadline.
+
+Examples that SHOULD create a task:
+- "I need to submit my COA assignment by March 30"
+- "Remind me to call John tomorrow"
+- "Add a task: finish the report by Friday"
+
+Examples that should NOT create a task:
+- "What should I do today?"
+- "Help me plan my week"
+- "I was thinking about starting a project"
+- "My deadline is next month" (too vague)
+- General questions or casual chat
+
+If a clear task exists respond with JSON:
 {
   "hasTask": true,
-  "title": "task title",
-  "due_date": "YYYY-MM-DD or null",
-  "project": "project name or null"
+  "title": "specific task title (max 60 chars)",
+  "due_date": "YYYY-MM-DD or null"
 }
-If no task found respond with: { "hasTask": false }
+
+If no clear task: { "hasTask": false }
+JSON only. No other text.
 `
     const extraction = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       messages: [{ role: "user", content: extractionPrompt }],
-      max_tokens: 100,
+      max_tokens: 150,
       response_format: { type: "json_object" }
     });
 
     const extracted = JSON.parse(extraction.choices[0].message.content || '{"hasTask":false}');
     if (extracted.hasTask && extracted.title && extracted.title.trim() !== "") {
-      const { error: taskError } = await supabase.from("tasks").insert({
-        user_id: session.user.id,
-        title: extracted.title,
-        due_date: extracted.due_date || null,
-        created_at: new Date().toISOString()
-      });
-      if (taskError) console.error("Auto-task insert error:", taskError);
+      // Duplicate prevention: check last 24 hours
+      const { data: existing } = await supabase
+        .from("tasks")
+        .select("id")
+        .eq("user_id", session.user.id)
+        .ilike("title", extracted.title)
+        .gte("created_at", new Date(Date.now() - 86400000).toISOString())
+        .maybeSingle();
+
+      if (!existing) {
+        const { error: taskError } = await supabase.from("tasks").insert({
+          user_id: session.user.id,
+          title: extracted.title,
+          due_date: extracted.due_date || null,
+          created_at: new Date().toISOString()
+        });
+        if (taskError) console.error("Auto-task insert error:", taskError);
+      }
     }
 
-    // B. Calendar Extraction (NEW)
+    // B. Calendar Extraction
     const calendarPrompt = `
 Analyze this message and check if it mentions a specific 
 date with an event or activity.
@@ -280,7 +308,7 @@ JSON only. No other text.
     const calendarExtraction = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       messages: [{ role: "user", content: calendarPrompt }],
-      max_tokens: 100,
+      max_tokens: 150,
       response_format: { type: "json_object" }
     });
 
@@ -294,27 +322,39 @@ JSON only. No other text.
       });
     }
 
-    // C. Fact Extraction (Memory Part B)
-    const factPrompt = `
-Extract any important facts from this message to remember about the user. 
-Examples: deadlines, project names, goals, preferences.
-Message: "${lastUserMessage.content}"
-If facts found respond with JSON: {"facts": "fact content"}
-If nothing important: {"facts": null}
-JSON only, no other text.
+    // C. Better Chat Memory (Summarization)
+    const summaryPrompt = `
+Based on this conversation, extract and summarize 
+the most important facts about the user to remember 
+for future conversations. Include:
+- Projects they mentioned
+- Deadlines
+- Goals discussed
+- Problems they shared
+- Decisions made
+- Personal context
+
+Current memory: ${memory?.recent_context || "none"}
+New conversation:
+User: ${lastUserMessage.content}
+AI: ${aiMessage}
+
+Update the memory summary. Keep it under 300 words.
+Respond with just the updated memory summary text.
 `
-    const factExtraction = await groq.chat.completions.create({
+
+    const memoryUpdate = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
-      messages: [{ role: "user", content: factPrompt }],
-      max_tokens: 100,
-      response_format: { type: "json_object" }
-    });
-    
-    const factData = JSON.parse(factExtraction.choices[0].message.content || '{"facts":null}');
-    if (factData.facts) {
+      messages: [{ role: "user", content: summaryPrompt }],
+      max_tokens: 400,
+    })
+
+    const updatedMemory = memoryUpdate.choices[0].message.content;
+
+    if (updatedMemory) {
       await supabase
         .from("user_memory")
-        .update({ recent_context: factData.facts })
+        .update({ recent_context: updatedMemory })
         .eq("user_id", session.user.id);
     }
   } catch (e) {
