@@ -118,8 +118,8 @@ export default function HabitsPage() {
           <div 
             key={habit.id} 
             className={cn(
-              "group bg-slate-900 border transition-all p-4 rounded-2xl shadow-sm flex items-center justify-between gap-4",
-              isCompletedToday ? "border-primary/50 bg-primary/[0.02]" : "border-slate-800"
+              "group bg-[var(--surface)] border transition-all p-4 rounded-2xl shadow-sm flex items-center justify-between gap-4",
+              isCompletedToday ? "border-primary/50 bg-primary/[0.02]" : "border-[var(--border)]"
             )}
           >
             <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -129,7 +129,7 @@ export default function HabitsPage() {
                   "h-8 w-8 rounded-full border-2 flex items-center justify-center transition-all shrink-0",
                   isCompletedToday 
                     ? "bg-primary border-primary text-white" 
-                    : "border-slate-800 text-transparent hover:border-primary/50"
+                    : "border-[var(--border)] text-transparent hover:border-primary/50"
                 )}
               >
                 <Check size={18} />
@@ -137,7 +137,7 @@ export default function HabitsPage() {
               
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-bold truncate text-slate-100">
+                  <h3 className="text-sm font-bold truncate text-[var(--text)]">
                     {habit.name}
                   </h3>
                   <div className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-orange-500/10 text-orange-500 text-[10px] font-black uppercase">
@@ -155,9 +155,9 @@ export default function HabitsPage() {
                         title={format(new Date(date), "MMM d")}
                         className={cn(
                           "h-1.5 w-1.5 rounded-full transition-all",
-                          done ? "bg-primary" : "bg-slate-800"
+                          done ? "bg-primary" : "bg-[var(--border)]"
                         )}
-                      />
+                       />
                     );
                   })}
                 </div>
@@ -166,18 +166,18 @@ export default function HabitsPage() {
 
             <button
               onClick={() => deleteHabit(habit.id)}
-              className="opacity-0 group-hover:opacity-100 p-2 text-slate-500 hover:text-red-500 transition-all"
+              className="opacity-0 group-hover:opacity-100 p-2 text-[var(--text-muted)] hover:text-red-500 transition-all"
             >
               <Trash2 size={16} />
             </button>
           </div>
         );
       }) : (
-        <div className="py-20 text-center space-y-4 bg-slate-900/50 border-2 border-dashed border-slate-800 rounded-3xl">
+        <div className="py-20 text-center space-y-4 bg-[var(--surface)]/50 border-2 border-dashed border-[var(--border)] rounded-3xl">
           <CheckCircle2 className="h-12 w-12 text-primary/20 mx-auto" />
           <div className="space-y-1">
-            <h3 className="text-sm font-bold text-slate-100">No habits tracked yet</h3>
-            <p className="text-xs text-slate-500">Build consistency by adding your first daily ritual.</p>
+            <h3 className="text-sm font-bold text-[var(--text)]">No habits tracked yet</h3>
+            <p className="text-xs text-[var(--text-muted)]">Build consistency by adding your first daily ritual.</p>
           </div>
         </div>
       )}
@@ -201,19 +201,19 @@ export default function HabitsPage() {
 
     return (
       <div className="space-y-6 animate-in fade-in duration-500">
-        <div className="flex items-center justify-between bg-slate-900 p-4 rounded-2xl border border-slate-800">
-          <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="p-2 hover:bg-slate-800 rounded-xl transition-colors">
+        <div className="flex items-center justify-between bg-[var(--surface)] p-4 rounded-2xl border border-[var(--border)]">
+          <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="p-2 hover:bg-[var(--bg)] rounded-xl transition-colors">
             <ChevronLeft size={20} />
           </button>
-          <h2 className="text-sm font-black uppercase tracking-widest">{format(currentMonth, "MMMM yyyy")}</h2>
-          <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="p-2 hover:bg-slate-800 rounded-xl transition-colors">
+          <h2 className="text-sm font-black uppercase tracking-widest text-[var(--text)]">{format(currentMonth, "MMMM yyyy")}</h2>
+          <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="p-2 hover:bg-[var(--bg)] rounded-xl transition-colors">
             <ChevronRight size={20} />
           </button>
         </div>
 
         <div className="grid grid-cols-7 gap-1">
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(d => (
-            <div key={d} className="text-center text-[10px] font-black text-slate-500 uppercase py-2">
+            <div key={d} className="text-center text-[10px] font-black text-[var(--text-muted)] uppercase py-2">
               {d}
             </div>
           ))}
@@ -228,17 +228,17 @@ export default function HabitsPage() {
                 key={i}
                 className={cn(
                   "aspect-square rounded-lg border flex items-center justify-center text-[10px] font-bold transition-all relative group",
-                  !isCurrentMonth ? "bg-transparent border-transparent text-slate-800" : "border-slate-800 text-slate-400",
+                  !isCurrentMonth ? "bg-transparent border-transparent text-[var(--text-muted)]/20" : "border-[var(--border)] text-[var(--text-muted)]",
                   completion === 100 && isCurrentMonth && "bg-emerald-500/20 border-emerald-500/30 text-emerald-400",
                   completion > 0 && completion < 100 && isCurrentMonth && "bg-amber-500/20 border-amber-500/30 text-amber-400",
-                  isToday && "ring-2 ring-primary ring-offset-2 ring-offset-slate-950",
+                  isToday && "ring-2 ring-primary ring-offset-2 ring-offset-[var(--bg)]",
                   future && "opacity-20 grayscale"
                 )}
               >
                 {format(day, "d")}
                 {isCurrentMonth && completion > 0 && (
                   <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg">
-                    <span className="text-[8px] font-black text-white">{Math.round(completion)}%</span>
+                    <span className="text-[8px] font-black text-[var(--text)]">{Math.round(completion)}%</span>
                   </div>
                 )}
               </div>
@@ -247,14 +247,14 @@ export default function HabitsPage() {
         </div>
         
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl text-center">
-            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Consistency</p>
+          <div className="bg-[var(--surface)] border border-[var(--border)] p-4 rounded-2xl text-center">
+            <p className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-1">Consistency</p>
             <p className="text-xl font-black text-primary">
               {Math.round((logs.length / (habits.length * 30 || 1)) * 100)}%
             </p>
           </div>
-          <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl text-center">
-            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Best Streak</p>
+          <div className="bg-[var(--surface)] border border-[var(--border)] p-4 rounded-2xl text-center">
+            <p className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-1">Best Streak</p>
             <p className="text-xl font-black text-orange-500">
               {habits.length > 0 ? Math.max(...habits.map(h => getStreak(h.id))) : 0} days
             </p>
@@ -265,19 +265,19 @@ export default function HabitsPage() {
   };
 
   return (
-    <div className="p-4 md:p-8 max-w-4xl mx-auto space-y-8 pb-32 min-h-screen bg-slate-950 text-slate-100">
+    <div className="p-4 md:p-8 max-w-4xl mx-auto space-y-8 pb-32 min-h-screen bg-[var(--bg)] text-[var(--text)]">
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-1">
           <h1 className="text-4xl font-black tracking-tight">{format(new Date(), "MMMM do")}</h1>
-          <p className="text-slate-500 text-sm font-bold uppercase tracking-widest">Rituals & Consistency</p>
+          <p className="text-[var(--text-muted)] text-sm font-bold uppercase tracking-widest">Rituals & Consistency</p>
         </div>
         
-        <div className="flex items-center gap-4 bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
+        <div className="flex items-center gap-4 bg-[var(--surface)] p-1.5 rounded-2xl border border-[var(--border)]">
           <button 
             onClick={() => setView("today")}
             className={cn(
               "px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
-              view === "today" ? "bg-primary text-white shadow-lg" : "text-slate-500 hover:text-slate-300"
+              view === "today" ? "bg-primary text-white shadow-lg" : "text-[var(--text-muted)] hover:text-[var(--text)]"
             )}
           >
             Today
@@ -286,7 +286,7 @@ export default function HabitsPage() {
             onClick={() => setView("monthly")}
             className={cn(
               "px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
-              view === "monthly" ? "bg-primary text-white shadow-lg" : "text-slate-500 hover:text-slate-300"
+              view === "monthly" ? "bg-primary text-white shadow-lg" : "text-[var(--text-muted)] hover:text-[var(--text)]"
             )}
           >
             Monthly
@@ -302,17 +302,17 @@ export default function HabitsPage() {
       </header>
 
       {isAdding && (
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-[2rem] shadow-2xl animate-in zoom-in-95 duration-200">
+        <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-[2rem] shadow-2xl animate-in zoom-in-95 duration-200">
           <form onSubmit={addHabit} className="flex gap-4">
             <input
               autoFocus
               value={newHabitName}
               onChange={(e) => setNewHabitName(e.target.value)}
               placeholder="What new ritual are we building?"
-              className="flex-1 bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+              className="flex-1 bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
             />
             <button type="submit" className="bg-primary text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase">Create</button>
-            <button type="button" onClick={() => setIsAdding(false)} className="px-4 py-2 text-[10px] font-black uppercase text-slate-500">Cancel</button>
+            <button type="button" onClick={() => setIsAdding(false)} className="px-4 py-2 text-[10px] font-black uppercase text-[var(--text-muted)]">Cancel</button>
           </form>
         </div>
       )}

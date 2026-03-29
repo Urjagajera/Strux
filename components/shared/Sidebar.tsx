@@ -20,8 +20,6 @@ import { cn } from "@/lib/utils";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
 import { signOut } from "next-auth/react";
 
-import GlobalSearch from "@/components/ui/GlobalSearch";
-
 const items = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Strux Professional", href: "/chat/professional", icon: Briefcase },
@@ -30,7 +28,6 @@ const items = [
   { name: "Notes", href: "/notes", icon: FileText },
   { name: "Calendar", href: "/calendar", icon: Calendar },
   { name: "Weekly Report", href: "/report", icon: BarChart2 },
-  { name: "Focus", href: "/focus", icon: Timer },
   { name: "Habits", href: "/habits", icon: CheckCircle2 },
 ];
 
@@ -46,17 +43,15 @@ export default function Sidebar({ user }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col h-full w-[220px] bg-slate-950 border-r border-slate-900">
-      {/* Top: Logo & Search */}
+    <div className="flex flex-col h-full w-[220px] bg-[var(--bg)] border-r border-[var(--border)]">
+      {/* Top: Logo */}
       <div className="p-4 space-y-6">
         <div className="flex items-center gap-2 px-2">
           <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center text-white shadow-lg">
             <Milestone className="h-5 w-5" />
           </div>
-          <span className="font-black text-lg tracking-tighter text-white uppercase italic">Strux</span>
+          <span className="font-black text-lg tracking-tighter text-[var(--text)] uppercase italic">Strux</span>
         </div>
-        
-        <GlobalSearch />
       </div>
       
       {/* Middle: Nav */}

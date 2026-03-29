@@ -17,7 +17,7 @@ export default async function SettingsPage() {
     .single()
 
   return (
-    <div className="h-full overflow-y-auto bg-slate-950">
+    <div className="h-full overflow-y-auto bg-[var(--bg)]">
       <div className="p-6 max-w-2xl mx-auto space-y-6 pb-20">
         <SettingsForm 
           profile={profile || {}} 

@@ -8,7 +8,7 @@ import {
   PieChart, Pie, Cell, ResponsiveContainer, CartesianGrid
 } from "recharts";
 
-const COLORS = ["#3b82f6", "#1e293b"]; // accent vs border/muted
+const COLORS = ["#3b82f6", "var(--border)"]; // accent vs border/muted
 
 export default function WeeklyReportPage() {
   const [report, setReport] = useState<any>(null);
@@ -31,7 +31,7 @@ export default function WeeklyReportPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-full bg-slate-950">
+      <div className="flex items-center justify-center h-full bg-[var(--bg)]">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     );
@@ -43,10 +43,10 @@ export default function WeeklyReportPage() {
   ];
 
   return (
-    <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-12 pb-24 bg-slate-950 text-slate-100 min-h-screen">
+    <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-12 pb-24 bg-[var(--bg)] text-[var(--text)] min-h-screen">
       <header className="flex flex-col gap-2">
-        <h1 className="text-4xl font-black tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">Weekly Performance</h1>
-        <p className="text-slate-500 text-sm font-bold uppercase tracking-widest">Efficiency & Logic Breakdown</p>
+        <h1 className="text-4xl font-black tracking-tight bg-gradient-to-r from-[var(--text)] to-[var(--text-muted)] bg-clip-text text-transparent">Weekly Performance</h1>
+        <p className="text-[var(--text-muted)] text-sm font-bold uppercase tracking-widest">Efficiency & Logic Breakdown</p>
       </header>
 
       {/* Stats Grid */}
@@ -57,12 +57,12 @@ export default function WeeklyReportPage() {
           { label: "Pending", value: report.pendingTasks, icon: Award, color: "text-amber-500", bg: "bg-amber-500/10" },
           { label: "Knowledge Base", value: report.totalNotes, icon: FileText, color: "text-purple-500", bg: "bg-purple-500/10" },
         ].map((stat, i) => (
-          <div key={i} className="bg-slate-900/50 border border-slate-800 p-6 rounded-[2rem] shadow-xl space-y-4 hover:border-slate-700 transition-all group">
-            <div className={`h-12 w-12 rounded-2xl ${stat.bg} flex items-center justify-center ${stat.color} border border-white/5`}>
+          <div key={i} className="bg-[var(--surface)]/50 border border-[var(--border)] p-6 rounded-[2rem] shadow-xl space-y-4 hover:border-primary/20 transition-all group">
+            <div className={`h-12 w-12 rounded-2xl ${stat.bg} flex items-center justify-center ${stat.color} border border-[var(--border)]`}>
               <stat.icon size={24} />
             </div>
             <div>
-              <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{stat.label}</p>
+              <p className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-1">{stat.label}</p>
               <h3 className="text-3xl font-black">{stat.value}</h3>
             </div>
           </div>
@@ -71,36 +71,36 @@ export default function WeeklyReportPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* CHART 1: Tasks by day */}
-        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 p-8 rounded-[2.5rem] shadow-2xl space-y-8">
+        <div className="lg:col-span-2 bg-[var(--surface)] border border-[var(--border)] p-8 rounded-[2.5rem] shadow-2xl space-y-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
                 <BarChart2 size={18} />
               </div>
-              <h2 className="text-sm font-black uppercase tracking-widest">Velocity by Day</h2>
+              <h2 className="text-sm font-black uppercase tracking-widest text-[var(--text)]">Velocity by Day</h2>
             </div>
-            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Tasks Created</span>
+            <span className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest">Tasks Created</span>
           </div>
           
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={report.tasksByDay}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
                 <XAxis 
                   dataKey="day" 
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 10, fontWeight: 800, fill: '#64748b' }}
+                  tick={{ fontSize: 10, fontWeight: 800, fill: 'var(--text-muted)' }}
                   dy={10}
                 />
                 <YAxis 
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 10, fontWeight: 800, fill: '#64748b' }}
+                  tick={{ fontSize: 10, fontWeight: 800, fill: 'var(--text-muted)' }}
                 />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '1rem', fontSize: '12px' }}
-                  cursor={{ fill: '#1e293b', opacity: 0.4 }}
+                  contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '1rem', fontSize: '12px', color: 'var(--text)' }}
+                  cursor={{ fill: 'var(--bg)', opacity: 0.4 }}
                 />
                 <Bar dataKey="count" fill="#3b82f6" radius={[6, 6, 0, 0]} barSize={40} />
               </BarChart>
@@ -109,12 +109,12 @@ export default function WeeklyReportPage() {
         </div>
 
         {/* CHART 2: Task completion rate */}
-        <div className="lg:col-span-1 bg-slate-900 border border-slate-800 p-8 rounded-[2.5rem] shadow-2xl space-y-8">
+        <div className="lg:col-span-1 bg-[var(--surface)] border border-[var(--border)] p-8 rounded-[2.5rem] shadow-2xl space-y-8">
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
               <PieIcon size={18} />
             </div>
-            <h2 className="text-sm font-black uppercase tracking-widest">Completion Mix</h2>
+            <h2 className="text-sm font-black uppercase tracking-widest text-[var(--text)]">Completion Mix</h2>
           </div>
 
           <div className="h-48 w-full relative">
@@ -134,65 +134,65 @@ export default function WeeklyReportPage() {
                   ))}
                 </Pie>
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '1rem', fontSize: '12px' }}
+                  contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '1rem', fontSize: '12px', color: 'var(--text)' }}
                 />
               </PieChart>
             </ResponsiveContainer>
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-xl font-black">{Math.round((report.completedCount / (report.totalTasks || 1)) * 100)}%</span>
-              <span className="text-[8px] font-black text-slate-500 uppercase tracking-tighter">Done</span>
+              <span className="text-xl font-black text-[var(--text)]">{Math.round((report.completedCount / (report.totalTasks || 1)) * 100)}%</span>
+              <span className="text-[8px] font-black text-[var(--text-muted)] uppercase tracking-tighter">Done</span>
             </div>
           </div>
 
           <div className="space-y-3">
-            <div className="flex justify-between items-center p-3 bg-slate-950/50 rounded-2xl border border-slate-800">
+            <div className="flex justify-between items-center p-3 bg-[var(--bg)]/50 rounded-2xl border border-[var(--border)]">
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-primary" />
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Completed</span>
+                <span className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest">Completed</span>
               </div>
-              <span className="text-xs font-black">{report.completedCount}</span>
+              <span className="text-xs font-black text-[var(--text)]">{report.completedCount}</span>
             </div>
-            <div className="flex justify-between items-center p-3 bg-slate-950/50 rounded-2xl border border-slate-800">
+            <div className="flex justify-between items-center p-3 bg-[var(--bg)]/50 rounded-2xl border border-[var(--border)]">
               <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-slate-800" />
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Pending</span>
+                <div className="h-2 w-2 rounded-full bg-[var(--bg)]" />
+                <span className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest">Pending</span>
               </div>
-              <span className="text-xs font-black">{report.pendingCount}</span>
+              <span className="text-xs font-black text-[var(--text)]">{report.pendingCount}</span>
             </div>
           </div>
         </div>
 
         {/* CHART 3: Focus Time by day */}
-        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 p-8 rounded-[2.5rem] shadow-2xl space-y-8">
+        <div className="lg:col-span-2 bg-[var(--surface)] border border-[var(--border)] p-8 rounded-[2.5rem] shadow-2xl space-y-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="h-8 w-8 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500">
                 <Clock size={18} />
               </div>
-              <h2 className="text-sm font-black uppercase tracking-widest">Focus Intensity</h2>
+              <h2 className="text-sm font-black uppercase tracking-widest text-[var(--text)]">Focus Intensity</h2>
             </div>
-            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Minutes Focused</span>
+            <span className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest">Minutes Focused</span>
           </div>
 
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={report.focusByDay}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
                 <XAxis 
                   dataKey="day" 
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 10, fontWeight: 800, fill: '#64748b' }}
+                  tick={{ fontSize: 10, fontWeight: 800, fill: 'var(--text-muted)' }}
                   dy={10}
                 />
                 <YAxis 
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 10, fontWeight: 800, fill: '#64748b' }}
+                  tick={{ fontSize: 10, fontWeight: 800, fill: 'var(--text-muted)' }}
                 />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '1rem', fontSize: '12px' }}
-                  cursor={{ fill: '#1e293b', opacity: 0.4 }}
+                  contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '1rem', fontSize: '12px', color: 'var(--text)' }}
+                  cursor={{ fill: 'var(--bg)', opacity: 0.4 }}
                 />
                 <Bar dataKey="minutes" fill="#f97316" radius={[6, 6, 0, 0]} barSize={40} />
               </BarChart>

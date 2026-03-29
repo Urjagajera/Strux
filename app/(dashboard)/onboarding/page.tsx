@@ -82,7 +82,7 @@ export default function Onboarding() {
   const Icon = currentQ.icon;
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 text-white overflow-hidden">
+    <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center p-6 text-[var(--text)] overflow-hidden">
       <div className="max-w-xl w-full">
         <div className="flex items-center gap-3 mb-12">
           <div className="h-10 w-10 rounded-2xl bg-primary/20 flex items-center justify-center text-primary border border-primary/20">
@@ -90,7 +90,7 @@ export default function Onboarding() {
           </div>
           <div>
             <h1 className="text-xl font-bold tracking-tight">Strux Onboarding</h1>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Step {step + 1} of {questions.length}</p>
+            <p className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-widest">Step {step + 1} of {questions.length}</p>
           </div>
         </div>
 
@@ -106,7 +106,7 @@ export default function Onboarding() {
             <div className="space-y-4">
               <div className="flex items-center gap-4 text-primary/60">
                 <Icon className="h-12 w-12" />
-                <div className="h-px flex-1 bg-slate-900"></div>
+                <div className="h-px flex-1 bg-[var(--surface)]"></div>
               </div>
               <h2 className="text-4xl font-bold leading-tight tracking-tighter">
                 {currentQ.text}
@@ -121,7 +121,7 @@ export default function Onboarding() {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleNext()}
                 placeholder={currentQ.placeholder}
-                className="w-full bg-transparent border-b-2 border-slate-800 py-6 text-2xl focus:outline-none focus:border-primary transition-all text-white placeholder-slate-700"
+                className="w-full bg-transparent border-b-2 border-[var(--border)] py-6 text-2xl focus:outline-none focus:border-primary transition-all text-[var(--text)] placeholder-[var(--text-muted)]/50"
               />
               <button
                 onClick={handleNext}
@@ -139,7 +139,7 @@ export default function Onboarding() {
             <div
               key={i}
               className={`h-1 flex-1 rounded-full transition-all duration-500 ${
-                i <= step ? "bg-primary" : "bg-slate-900"
+                i <= step ? "bg-primary" : "bg-[var(--surface)]"
               }`}
             ></div>
           ))}

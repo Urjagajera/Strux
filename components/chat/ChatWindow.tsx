@@ -30,9 +30,6 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         
-        console.log("Loading history for mode:", mode);
-        console.log("History data received:", data);
-        
         if (Array.isArray(data) && data.length > 0) {
           setMessages(data.map((m: any) => ({
             role: m.role,
@@ -111,9 +108,9 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
     else if (isYesterday(date)) label = "Yesterday";
 
     return (
-      <div className="flex items-center justify-center my-6">
+      <div className="flex items-center justify-center my-6 text-[var(--text-muted)]">
         <div className="h-[1px] flex-1 bg-[var(--border)]"></div>
-        <span className="px-4 text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest">
+        <span className="px-4 text-[10px] font-bold uppercase tracking-widest text-[var(--text-muted)]">
           {label}
         </span>
         <div className="h-[1px] flex-1 bg-[var(--border)]"></div>
@@ -152,7 +149,7 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
                       className={cn(
                         "max-w-[80%] md:max-w-[70%] px-4 py-2.5 text-sm shadow-sm transition-all",
                         m.role === "user"
-                          ? "bg-[var(--accent)] text-white rounded-2xl rounded-br-sm ml-auto"
+                          ? "bg-primary text-white rounded-2xl rounded-br-sm ml-auto"
                           : "bg-[var(--surface)] border border-[var(--border)] text-[var(--text)] rounded-2xl rounded-bl-sm"
                       )}
                     >
@@ -163,16 +160,16 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
                             code({ node, inline, className, children, ...props }: any) {
                               const match = /language-(\w+)/.exec(className || '')
                               return !inline ? (
-                                <pre className="bg-slate-800 rounded-lg p-4 overflow-x-auto my-2">
-                                  <code className={`text-sm text-slate-100 ${className}`} {...props}>
+                                <pre className="bg-[var(--bg)] border border-[var(--border)] rounded-lg p-4 overflow-x-auto my-2">
+                                  <code className={cn("text-sm text-[var(--text)]", className)} {...props}>
                                     {children}
                                   </code>
                                 </pre>
                               ) : (
-                                <code className="bg-slate-700 rounded px-1.5 py-0.5 text-sm text-slate-100" {...props}>
+                                <code className="bg-[var(--surface)] border border-[var(--border)] rounded px-1.5 py-0.5 text-sm text-[var(--text)] font-semibold" {...props}>
                                   {children}
                                 </code>
-                              )
+                               )
                             },
                             h1: ({ children }) => (
                               <h1 className="text-lg font-bold mt-4 mb-2 text-[var(--text)]">{children}</h1>
@@ -193,7 +190,7 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
                               <ol className="list-decimal list-inside mb-2 space-y-1 text-sm">{children}</ol>
                             ),
                             blockquote: ({ children }) => (
-                              <blockquote className="border-l-2 border-[var(--accent)] pl-3 my-2 text-[var(--text-muted)] italic text-sm">
+                              <blockquote className="border-l-2 border-primary pl-3 my-2 text-[var(--text-muted)] italic text-sm">
                                 {children}
                               </blockquote>
                             ),
@@ -232,11 +229,11 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
         ))}
         {isLoading && messages.length > 0 && messages[messages.length - 1]?.role === "user" && (
           <div className="flex items-center gap-2 pl-8 mt-4">
-            <div className="h-6 w-6 rounded-full bg-[var(--accent)]/10 animate-pulse flex items-center justify-center text-[10px] font-bold text-[var(--accent)]">
+            <div className="h-6 w-6 rounded-full bg-primary/10 animate-pulse flex items-center justify-center text-[10px] font-bold text-primary">
               S
             </div>
             <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl px-4 py-2 shadow-sm">
-              <Loader2 className="h-3 w-3 animate-spin text-[var(--accent)]/60" />
+              <Loader2 className="h-3 w-3 animate-spin text-primary/60" />
             </div>
           </div>
         )}
@@ -248,12 +245,12 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Message Strux..."
-            className="flex-1 bg-[var(--surface)] border border-[var(--border)] text-[var(--text)] rounded-2xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 transition-all placeholder:text-[var(--text-muted)]/50"
+            className="flex-1 bg-[var(--surface)] border border-[var(--border)] text-[var(--text)] rounded-2xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all placeholder:text-[var(--text-muted)]/50"
           />
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="bg-[var(--accent)] text-white rounded-xl p-2.5 disabled:opacity-50 hover:scale-105 active:scale-95 transition-all shadow-md flex items-center justify-center shrink-0"
+            className="bg-primary text-white rounded-xl p-2.5 disabled:opacity-50 hover:scale-105 active:scale-95 transition-all shadow-md flex items-center justify-center shrink-0"
           >
             <Send className="h-4 w-4" />
           </button>

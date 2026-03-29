@@ -29,22 +29,22 @@ export default function NotesPage() {
   }, [query]);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto text-white">
+    <div className="p-6 max-w-7xl mx-auto text-[var(--text)]">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-lg font-black tracking-tight mb-1 text-white">Knowledge Base</h1>
-          <p className="text-xs text-slate-400 font-medium">Keep track of ideas, tags, and snippets.</p>
+          <h1 className="text-lg font-black tracking-tight mb-1 text-[var(--text)]">Knowledge Base</h1>
+          <p className="text-xs text-[var(--text-muted)] font-medium">Keep track of ideas, tags, and snippets.</p>
         </div>
         <NewNoteButton />
       </div>
 
       <div className="relative mb-8 max-w-md">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--text-muted)]" />
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search notes..."
-          className="w-full pl-10 pr-4 py-2 text-sm bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+          className="w-full pl-10 pr-4 py-2 text-sm bg-[var(--surface)] border border-[var(--border)] rounded-xl text-[var(--text)] focus:outline-none focus:ring-1 focus:ring-primary transition-all"
         />
       </div>
 
