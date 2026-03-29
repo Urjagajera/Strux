@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { updateUserMemory } from "@/lib/memory/engine";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, User, Briefcase, Target, Clock, AlertCircle } from "lucide-react";
 

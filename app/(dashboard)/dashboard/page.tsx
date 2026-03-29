@@ -2,18 +2,35 @@ import { auth } from "@/auth";
 import { getUserMemory } from "@/lib/memory/engine";
 import { createClient } from "@/lib/supabase/server";
 import { 
-  CheckSquare, Zap, Calendar, FileText, Sparkles, 
+  CheckSquare, Zap, FileText, Sparkles, 
   ArrowUpRight, ArrowDownRight, Minus, Timer 
 } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import Groq from "groq-sdk";
 import { startOfDay, subDays, format } from "date-fns";
-import { cn } from "@/lib/utils";
 
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY!,
 });
+
+interface StatTask {
+  id: string;
+  status: string;
+  created_at: string;
+  title: string;
+  due_date?: string;
+}
+
+interface StatFocus {
+  duration_minutes: number;
+}
+
+const TrendIndicator = ({ trend, label }: { trend: string, label: string }) => {
+  if (trend === "up") return <span className="text-[8px] font-black text-emerald-500 uppercase flex items-center gap-0.5"><ArrowUpRight size={10} /> +{label}</span>;
+  if (trend === "down") return <span className="text-[8px] font-black text-red-500 uppercase flex items-center gap-0.5"><ArrowDownRight size={10} /> -{label}</span>;
+  return <span className="text-[8px] font-black text-[var(--text-muted)] uppercase flex items-center gap-0.5"><Minus size={10} /> Stable</span>;
+};
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -41,7 +58,7 @@ export default async function DashboardPage() {
 
   // 3. Data Fetching
   const [
-    memory,
+    memoryData,
     thisWeekTasksData,
     lastWeekTasksData,
     thisWeekNotesData,
@@ -58,15 +75,16 @@ export default async function DashboardPage() {
     supabase.from("focus_sessions").select("*").eq("user_id", session.user.id).gte("session_date", format(lastWeekStart, "yyyy-MM-dd")).lte("session_date", format(lastWeekEnd, "yyyy-MM-dd")),
   ]);
 
-  const thisWeekTasks = thisWeekTasksData.data || [];
-  const lastWeekTasks = lastWeekTasksData.data || [];
-  const thisWeekNotes = thisWeekNotesData.data || [];
-  const lastWeekNotes = lastWeekNotesData.data || [];
-  const thisWeekFocus = thisWeekFocusData.data || [];
-  const lastWeekFocus = lastWeekFocusData.data || [];
+  const memory = memoryData as any;
+  const thisWeekTasks = (thisWeekTasksData.data || []) as StatTask[];
+  const lastWeekTasks = (lastWeekTasksData.data || []) as StatTask[];
+  const thisWeekNotes = (thisWeekNotesData.data || []);
+  const lastWeekNotes = (lastWeekNotesData.data || []);
+  const thisWeekFocus = (thisWeekFocusData.data || []) as StatFocus[];
+  const lastWeekFocus = (lastWeekFocusData.data || []) as StatFocus[];
 
   // 4. Stat Calculations
-  const calcStats = (tasks: any[], focus: any[], notesCount: number) => {
+  const calcStats = (tasks: StatTask[], focus: StatFocus[], notesCount: number) => {
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(t => t.status === 'done').length;
     const completionRate = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
@@ -91,8 +109,8 @@ export default async function DashboardPage() {
   };
 
   // 5. AI Briefing
-  let dailyBrief = (memory as any)?.daily_brief;
-  const briefDate = (memory as any)?.brief_date;
+  let dailyBrief = memory?.daily_brief;
+  const briefDate = memory?.brief_date;
 
   if (briefDate !== todayStr) {
     const pendingTasks = thisWeekTasks.filter(t => t.status !== 'done');
@@ -117,12 +135,6 @@ The briefing should be persona-based (Strux Assistant), encouraging, and focus o
     }
   }
 
-  const TrendIndicator = ({ trend, label }: { trend: string, label: string }) => {
-    if (trend === "up") return <span className="text-[8px] font-black text-emerald-500 uppercase flex items-center gap-0.5"><ArrowUpRight size={10} /> +{label}</span>;
-    if (trend === "down") return <span className="text-[8px] font-black text-red-500 uppercase flex items-center gap-0.5"><ArrowDownRight size={10} /> -{label}</span>;
-    return <span className="text-[8px] font-black text-[var(--text-muted)] uppercase flex items-center gap-0.5"><Minus size={10} /> Stable</span>;
-  };
-
   return (
     <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-10 pb-32 bg-[var(--bg)] text-[var(--text)] min-h-screen">
       {/* Welcome Bar */}
@@ -139,7 +151,7 @@ The briefing should be persona-based (Strux Assistant), encouraging, and focus o
         {memory?.goals && (
           <div className="px-5 py-3 bg-primary/5 border border-primary/20 rounded-2xl shadow-xl shadow-primary/5">
             <p className="text-[10px] uppercase font-black tracking-widest text-primary mb-1">Active Objective</p>
-            <p className="text-xs font-bold text-[var(--text)]">"{memory.goals}"</p>
+            <p className="text-xs font-bold text-[var(--text)]">&quot;{memory.goals}&quot;</p>
           </div>
         )}
       </header>
@@ -152,7 +164,7 @@ The briefing should be persona-based (Strux Assistant), encouraging, and focus o
         <div className="space-y-2 text-center md:text-left flex-1">
           <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Strategic Insight</h2>
           <p className="text-base font-bold text-[var(--text)] leading-relaxed italic">
-            "{dailyBrief}"
+            &quot;{dailyBrief}&quot;
           </p>
         </div>
       </div>

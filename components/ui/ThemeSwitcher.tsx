@@ -7,14 +7,22 @@ type Theme = "dark" | "light" | "blue";
 
 export default function ThemeSwitcher() {
   const [theme, setTheme] = useState<Theme>("dark");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const savedTheme = localStorage.getItem("strux-theme") as Theme;
     if (savedTheme) {
       setTheme(savedTheme);
       document.documentElement.setAttribute("data-theme", savedTheme);
     }
   }, []);
+
+  if (!mounted) return (
+    <div className="flex items-center gap-2 p-2 bg-[var(--surface)] border border-[var(--border)] rounded-xl opacity-0">
+      <div className="h-4 w-4" />
+    </div>
+  );
 
   const toggleTheme = (newTheme: Theme) => {
     setTheme(newTheme);

@@ -22,9 +22,9 @@ export default function LoginPage() {
           <div className="space-y-6">
             <Quote className="text-primary opacity-50" size={48} />
             <h2 className="text-4xl font-black tracking-tight leading-tight max-w-md">
-              "The secret of getting ahead is getting started."
+              &quot;The secret of getting ahead is getting started.&quot;
             </h2>
-            <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">— Mark Twain</p>
+            <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">&mdash; Mark Twain</p>
           </div>
 
           <div className="space-y-4">
@@ -85,6 +85,7 @@ export default function LoginPage() {
               </button>
             </form>
 
+            {/* GitHub button on hold - omitting as per Step 3 instructions */}
 
             <div className="relative py-4">
               <div className="absolute inset-0 flex items-center">
@@ -96,7 +97,7 @@ export default function LoginPage() {
             </div>
 
             <p className="text-center text-sm font-bold text-gray-500">
-              New to Strux? <Link href="/login" className="text-black hover:underline">It's free</Link>
+              New to Strux? <Link href="/login" className="text-black hover:underline">It&apos;s free</Link>
             </p>
           </div>
 
