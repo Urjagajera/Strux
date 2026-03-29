@@ -10,8 +10,21 @@ import {
 
 const COLORS = ["#3b82f6", "var(--border)"]; // accent vs border/muted
 
+interface WeeklyReport {
+  totalTasks: number;
+  completedTasks: number;
+  pendingTasks: number;
+  totalNotes: number;
+  completedCount: number;
+  pendingCount: number;
+  tasksByDay: { day: string; count: number }[];
+  focusByDay: { day: string; minutes: number }[];
+  aiSummary: string;
+  mostActiveDay: string;
+}
+
 export default function WeeklyReportPage() {
-  const [report, setReport] = useState<any>(null);
+  const [report, setReport] = useState<WeeklyReport | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,9 +42,9 @@ export default function WeeklyReportPage() {
     fetchReport();
   }, []);
 
-  if (loading) {
+  if (loading || !report) {
     return (
-      <div className="flex items-center justify-center h-full bg-[var(--bg)]">
+      <div className="flex items-center justify-center h-full bg-[var(--bg)] min-h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     );

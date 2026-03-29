@@ -5,10 +5,16 @@ import { Search, Command, X, CheckSquare, FileText, Calendar, ArrowRight } from 
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
+interface SearchResults {
+  tasks: { id: string; title: string }[];
+  notes: { id: string; title: string; content: string }[];
+  calendar: { id: string; content: string; entry_date: string }[];
+}
+
 export default function GlobalSearch() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<any>({ tasks: [], notes: [], calendar: [] });
+  const [results, setResults] = useState<SearchResults>({ tasks: [], notes: [], calendar: [] });
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -102,7 +108,7 @@ export default function GlobalSearch() {
                     <CheckSquare size={12} /> Tasks
                   </h3>
                   <div className="grid gap-1">
-                    {results.tasks.map((task: any) => (
+                    {results.tasks.map((task) => (
                       <button
                         key={task.id}
                         onClick={() => navigateTo("/tasks")}
@@ -123,7 +129,7 @@ export default function GlobalSearch() {
                     <FileText size={12} /> Knowledge Base
                   </h3>
                   <div className="grid gap-1">
-                    {results.notes.map((note: any) => (
+                    {results.notes.map((note) => (
                       <button
                         key={note.id}
                         onClick={() => navigateTo("/notes")}
@@ -147,7 +153,7 @@ export default function GlobalSearch() {
                     <Calendar size={12} /> Calendar
                   </h3>
                   <div className="grid gap-1">
-                    {results.calendar.map((entry: any) => (
+                    {results.calendar.map((entry) => (
                       <button
                         key={entry.id}
                         onClick={() => navigateTo("/calendar")}

@@ -2,14 +2,16 @@ import { createClient } from "@/lib/supabase/server";
 import { Database } from "@/types/database";
 
 export type UserMemory = {
-  name?: string;
-  role?: string;
-  active_projects?: string[];
-  goals?: string;
-  preferences?: Record<string, any>;
-  recent_context?: string;
-  work_hours?: string;
-  challenges?: string;
+  name?: string | null;
+  role?: string | null;
+  active_projects?: string[] | null;
+  goals?: string | null;
+  preferences?: Record<string, unknown> | null;
+  recent_context?: string | null;
+  work_hours?: string | null;
+  challenges?: string | null;
+  daily_brief?: string | null;
+  brief_date?: string | null;
 };
 
 export async function getUserMemory(userId: string): Promise<UserMemory | null> {

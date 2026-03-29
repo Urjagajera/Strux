@@ -44,8 +44,8 @@ export default function NewTaskButton() {
       setDueDate("");
       setStatus("pending");
       router.refresh();
-    } catch (err: any) {
-      setError(err.message || "Failed to create task");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create task");
     } finally {
       setIsSubmitting(false);
     }

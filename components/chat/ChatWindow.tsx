@@ -31,7 +31,7 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
         const data = await res.json();
         
         if (Array.isArray(data) && data.length > 0) {
-          setMessages(data.map((m: any) => ({
+          setMessages(data.map((m: Message) => ({
             role: m.role,
             content: m.content,
             created_at: m.created_at
@@ -94,7 +94,7 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
     const groups: { [key: string]: Message[] } = {};
     msgs.forEach((m) => {
       const date = m.created_at ? new Date(m.created_at) : new Date();
-      let dateKey = format(date, "yyyy-MM-dd");
+      const dateKey = format(date, "yyyy-MM-dd");
       if (!groups[dateKey]) groups[dateKey] = [];
       groups[dateKey].push(m);
     });
@@ -157,16 +157,16 @@ export default function ChatWindow({ mode }: { mode: "pro" | "personal" }) {
                         <ReactMarkdown 
                           remarkPlugins={[remarkGfm]}
                           components={{
-                            code({ node, inline, className, children, ...props }: any) {
+                            code({ inline, className, children, ...props }: { inline?: boolean, className?: string, children?: React.ReactNode }) {
                               const match = /language-(\w+)/.exec(className || '')
                               return !inline ? (
                                 <pre className="bg-[var(--bg)] border border-[var(--border)] rounded-lg p-4 overflow-x-auto my-2">
-                                  <code className={cn("text-sm text-[var(--text)]", className)} {...props}>
+                                  <code className={cn("text-sm text-[var(--text)]", className)} {...(props as React.ComponentPropsWithoutRef<'code'>)}>
                                     {children}
                                   </code>
                                 </pre>
                               ) : (
-                                <code className="bg-[var(--surface)] border border-[var(--border)] rounded px-1.5 py-0.5 text-sm text-[var(--text)] font-semibold" {...props}>
+                                <code className="bg-[var(--surface)] border border-[var(--border)] rounded px-1.5 py-0.5 text-sm text-[var(--text)] font-semibold" {...(props as React.ComponentPropsWithoutRef<'code'>)}>
                                   {children}
                                 </code>
                                )

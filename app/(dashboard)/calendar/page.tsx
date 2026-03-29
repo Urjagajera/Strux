@@ -6,11 +6,21 @@ import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, CheckCircle2, Circ
 import { cn } from "@/lib/utils";
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, isSameMonth, isSameDay, addDays, parseISO } from "date-fns";
 
+interface CalendarEntry {
+  id: string;
+  entry_date: string;
+  entry_time?: string;
+  content: string;
+}
+
 export default function CalendarPage() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [entries, setEntries] = useState<CalendarEntry[]>([]);
+  const [newEntryContent, setNewEntryContent] = useState("");
+  const [newEntryTime, setNewEntryTime] = useState(format(new Date(), "HH:mm"));
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -25,6 +35,35 @@ export default function CalendarPage() {
     };
     fetchTasks();
   }, []);
+
+  useEffect(() => {
+    const fetchEntries = async () => {
+      const resp = await fetch(`/api/calendar/entries?date=${format(selectedDate, "yyyy-MM-dd")}`);
+      if (resp.ok) {
+        const data = await resp.json();
+        setEntries(data);
+      }
+    };
+    fetchEntries();
+  }, [selectedDate]);
+
+  const handleAddEntry = async () => {
+    if (!newEntryContent) return;
+    const resp = await fetch("/api/calendar/entries", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        entry_date: format(selectedDate, "yyyy-MM-dd"),
+        entry_time: newEntryTime,
+        content: newEntryContent,
+      }),
+    });
+    if (resp.ok) {
+      const newEntry = await resp.json();
+      setEntries([...entries, newEntry].sort((a, b) => (a.entry_time || "").localeCompare(b.entry_time || "")));
+      setNewEntryContent("");
+    }
+  };
 
   const renderHeader = () => {
     return (
@@ -144,39 +183,6 @@ export default function CalendarPage() {
       days = [];
     }
     return <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-2xl h-full overflow-hidden">{rows}</div>;
-  };
-
-  const [entries, setEntries] = useState<any[]>([]);
-  const [newEntryContent, setNewEntryContent] = useState("");
-  const [newEntryTime, setNewEntryTime] = useState(format(new Date(), "HH:mm"));
-
-  useEffect(() => {
-    const fetchEntries = async () => {
-      const resp = await fetch(`/api/calendar/entries?date=${format(selectedDate, "yyyy-MM-dd")}`);
-      if (resp.ok) {
-        const data = await resp.json();
-        setEntries(data);
-      }
-    };
-    fetchEntries();
-  }, [selectedDate]);
-
-  const handleAddEntry = async () => {
-    if (!newEntryContent) return;
-    const resp = await fetch("/api/calendar/entries", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        entry_date: format(selectedDate, "yyyy-MM-dd"),
-        entry_time: newEntryTime,
-        content: newEntryContent,
-      }),
-    });
-    if (resp.ok) {
-      const newEntry = await resp.json();
-      setEntries([...entries, newEntry].sort((a, b) => (a.entry_time || "").localeCompare(b.entry_time || "")));
-      setNewEntryContent("");
-    }
   };
 
   const selectedDayTasks = tasks.filter(task => task.due_date && isSameDay(parseISO(task.due_date), selectedDate));

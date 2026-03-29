@@ -13,9 +13,21 @@ import {
 } from "date-fns";
 import { cn } from "@/lib/utils";
 
+interface Habit {
+  id: string;
+  name: string;
+  created_at: string;
+}
+
+interface HabitLog {
+  id: string;
+  habit_id: string;
+  completed_date: string;
+}
+
 export default function HabitsPage() {
-  const [habits, setHabits] = useState<any[]>([]);
-  const [logs, setLogs] = useState<any[]>([]);
+  const [habits, setHabits] = useState<Habit[]>([]);
+  const [logs, setLogs] = useState<HabitLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [newHabitName, setNewHabitName] = useState("");
   const [isAdding, setIsAdding] = useState(false);

@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { getUserMemory } from "@/lib/memory/engine";
+import { getUserMemory, UserMemory } from "@/lib/memory/engine";
 import { createClient } from "@/lib/supabase/server";
 import { 
   CheckSquare, Zap, FileText, Sparkles, 
@@ -75,7 +75,7 @@ export default async function DashboardPage() {
     supabase.from("focus_sessions").select("*").eq("user_id", session.user.id).gte("session_date", format(lastWeekStart, "yyyy-MM-dd")).lte("session_date", format(lastWeekEnd, "yyyy-MM-dd")),
   ]);
 
-  const memory = memoryData as any;
+  const memory = memoryData as UserMemory;
   const thisWeekTasks = (thisWeekTasksData.data || []) as StatTask[];
   const lastWeekTasks = (lastWeekTasksData.data || []) as StatTask[];
   const thisWeekNotes = (thisWeekNotesData.data || []);

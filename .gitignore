@@ -30,6 +30,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 eslint_errors*.txt
+final_lint*.txt
 
 # env files (can opt-in for committing if needed)
 .env*

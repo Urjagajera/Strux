@@ -44,8 +44,8 @@ export default function NewNoteButton() {
       setContent("");
       setTags("");
       router.refresh();
-    } catch (err: any) {
-      setError(err.message || "Failed to create note");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create note");
     } finally {
       setIsSubmitting(false);
     }

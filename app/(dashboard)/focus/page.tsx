@@ -6,6 +6,19 @@ import { format } from "date-fns";
 import { getTasks } from "@/actions/tasks";
 import { cn } from "@/lib/utils";
 
+interface FocusTask {
+  id: string;
+  title: string;
+  status: string;
+}
+
+interface FocusSession {
+  id: string;
+  task_name: string;
+  duration_minutes: number;
+  started_at?: string;
+}
+
 export default function FocusPage() {
   // Timer State
   const [timeLeft, setTimeLeft] = useState(25 * 60);
@@ -16,8 +29,8 @@ export default function FocusPage() {
   
   // App State
   const [selectedTask, setSelectedTask] = useState<string>("");
-  const [tasks, setTasks] = useState<any[]>([]);
-  const [history, setHistory] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<FocusTask[]>([]);
+  const [history, setHistory] = useState<FocusSession[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -29,7 +42,7 @@ export default function FocusPage() {
   useEffect(() => {
     const init = async () => {
       const taskData = await getTasks();
-      setTasks(taskData.filter((t: any) => t.status !== 'done'));
+      setTasks(taskData.filter((t: FocusTask) => t.status !== 'done'));
       fetchHistory();
     };
     init();
@@ -108,7 +121,7 @@ export default function FocusPage() {
   };
 
   const playNotificationSound = () => {
-    const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const audioCtx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
     const oscillator = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
     oscillator.connect(gainNode);
@@ -208,7 +221,7 @@ export default function FocusPage() {
             ].map((m) => (
               <button
                 key={m.value}
-                onClick={() => switchMode(m.value as any, m.time)}
+                onClick={() => switchMode(m.value as "FOCUS" | "SHORT BREAK" | "LONG BREAK", m.time)}
                 className={cn(
                   "px-4 py-1.5 rounded-xl text-[10px] font-bold uppercase transition-all",
                   mode === m.value 
