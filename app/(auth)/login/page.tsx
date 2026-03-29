@@ -85,7 +85,6 @@ export default function LoginPage() {
               </button>
             </form>
 
-            {/* GitHub button on hold - omitting as per Step 3 instructions */}
 
             <div className="relative py-4">
               <div className="absolute inset-0 flex items-center">
