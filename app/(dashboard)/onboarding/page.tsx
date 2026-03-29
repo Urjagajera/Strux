@@ -7,35 +7,35 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, User, Briefcase, Target, Clock, AlertCircle } from "lucide-react";
 
 const questions = [
-  { 
-    id: "name", 
-    text: "What should I call you?", 
-    icon: User, 
-    placeholder: "e.g. Alex" 
+  {
+    id: "name",
+    text: "What should I call you?",
+    icon: User,
+    placeholder: "e.g. Alex"
   },
-  { 
-    id: "role", 
-    text: "What do you do for work or study?", 
-    icon: Briefcase, 
-    placeholder: "e.g. Software Engineer, Student..." 
+  {
+    id: "role",
+    text: "What do you do for work or study?",
+    icon: Briefcase,
+    placeholder: "e.g. Engineer, Student..."
   },
-  { 
-    id: "goals", 
-    text: "What are your top 3 goals right now?", 
-    icon: Target, 
-    placeholder: "e.g. Build an AI app, Run a marathon..." 
+  {
+    id: "goals",
+    text: "What are your top 3 goals right now?",
+    icon: Target,
+    placeholder: "e.g. Build an AI app, Run a marathon..."
   },
-  { 
-    id: "challenges", 
-    text: "What is your biggest challenge right now?", 
-    icon: AlertCircle, 
-    placeholder: "e.g. Time management, Scaling..." 
+  {
+    id: "challenges",
+    text: "What is your biggest challenge right now?",
+    icon: AlertCircle,
+    placeholder: "e.g. Time management, Scaling..."
   },
-  { 
-    id: "work_hours", 
-    text: "How many hours a day do you usually work?", 
-    icon: Clock, 
-    placeholder: "e.g. 8-10 hours" 
+  {
+    id: "work_hours",
+    text: "How many hours a day do you usually work?",
+    icon: Clock,
+    placeholder: "e.g. 8"
   },
 ];
 
@@ -63,7 +63,7 @@ export default function Onboarding() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newAnswers),
         });
-        
+
         if (response.ok) {
           router.push("/dashboard");
         } else {
@@ -138,9 +138,8 @@ export default function Onboarding() {
           {questions.map((_, i) => (
             <div
               key={i}
-              className={`h-1 flex-1 rounded-full transition-all duration-500 ${
-                i <= step ? "bg-primary" : "bg-[var(--surface)]"
-              }`}
+              className={`h-1 flex-1 rounded-full transition-all duration-500 ${i <= step ? "bg-primary" : "bg-[var(--surface)]"
+                }`}
             ></div>
           ))}
         </div>
