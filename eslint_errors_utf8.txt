@@ -1,0 +1,256 @@
+﻿
+D:\ANTI\Strux\app\(auth)\login\page.tsx
+  25:15  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  25:63  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  99:90  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\ANTI\Strux\app\(dashboard)\calendar\page.tsx
+    5:77  warning  'Circle' is defined but never used              @typescript-eslint/no-unused-vars
+   13:10  warning  'isLoading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  149:42  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+
+D:\ANTI\Strux\app\(dashboard)\dashboard\page.tsx
+    5:21  warning  'Calendar' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   12:10  warning  'cn' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   69:29  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+   69:43  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+   94:31  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+   95:32  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+  115:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  142:65  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+  142:80  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+  155:13  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+  155:26  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+  174:16  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+D:\ANTI\Strux\app\(dashboard)\dashboard\page.tsx:174:16
+  172 |                 <CheckSquare size={20} />
+  173 |               </div>
+> 174 |               <TrendIndicator trend={trends.tasks} label="Tasks" />
+      |                ^^^^^^^^^^^^^^ This component is created during render
+  175 |             </div>
+  176 |             <div>
+  177 |               <h3 className="text-3xl font-black">{currentStats.totalTasks}</h3>
+
+D:\ANTI\Strux\app\(dashboard)\dashboard\page.tsx:120:26
+  118 |   }
+  119 |
+> 120 |   const TrendIndicator = ({ trend, label }: { trend: string, label: string }) => {
+      |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 121 |     if (trend === "up") return <span className="text-[8px] font-black text-emerald-500 uppercase flex items-center gap-0.5"><ArrowUpRight size={10} /> +{label}</span>;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 122 |     if (trend === "down") return <span className="text-[8px] font-black text-red-500 uppercase flex items-center gap-0.5"><ArrowDownRight size={10} /> -{label}</span>;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 123 |     return <span className="text-[8px] font-black text-[var(--text-muted)] uppercase flex items-center gap-0.5"><Minus size={10} /> Stable</span>;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 124 |   };
+      | ^^^^ The component is created during render here
+  125 |
+  126 |   return (
+  127 |     <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-10 pb-32 bg-[var(--bg)] text-[var(--text)] min-h-screen">               react-hooks/static-components
+  188:16  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+D:\ANTI\Strux\app\(dashboard)\dashboard\page.tsx:188:16
+  186 |                 <Zap size={20} />
+  187 |               </div>
+> 188 |               <TrendIndicator trend={trends.completion} label="Rate" />
+      |                ^^^^^^^^^^^^^^ This component is created during render
+  189 |             </div>
+  190 |             <div>
+  191 |               <h3 className="text-3xl font-black">{Math.round(currentStats.completionRate)}%</h3>
+
+D:\ANTI\Strux\app\(dashboard)\dashboard\page.tsx:120:26
+  118 |   }
+  119 |
+> 120 |   const TrendIndicator = ({ trend, label }: { trend: string, label: string }) => {
+      |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 121 |     if (trend === "up") return <span className="text-[8px] font-black text-emerald-500 uppercase flex items-center gap-0.5"><ArrowUpRight size={10} /> +{label}</span>;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 122 |     if (trend === "down") return <span className="text-[8px] font-black text-red-500 uppercase flex items-center gap-0.5"><ArrowDownRight size={10} /> -{label}</span>;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 123 |     return <span className="text-[8px] font-black text-[var(--text-muted)] uppercase flex items-center gap-0.5"><Minus size={10} /> Stable</span>;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 124 |   };
+      | ^^^^ The component is created during render here
+  125 |
+  126 |   return (
+  127 |     <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-10 pb-32 bg-[var(--bg)] text-[var(--text)] min-h-screen">  react-hooks/static-components
+  202:16  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+D:\ANTI\Strux\app\(dashboard)\dashboard\page.tsx:202:16
+  200 |                 <FileText size={20} />
+  201 |               </div>
+> 202 |               <TrendIndicator trend={trends.notes} label="Assets" />
+      |                ^^^^^^^^^^^^^^ This component is created during render
+  203 |             </div>
+  204 |             <div>
+  205 |               <h3 className="text-3xl font-black">{currentStats.notesCount}</h3>
+
+D:\ANTI\Strux\app\(dashboard)\dashboard\page.tsx:120:26
+  118 |   }
+  119 |
+> 120 |   const TrendIndicator = ({ trend, label }: { trend: string, label: string }) => {
+      |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 121 |     if (trend === "up") return <span className="text-[8px] font-black text-emerald-500 uppercase flex items-center gap-0.5"><ArrowUpRight size={10} /> +{label}</span>;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 122 |     if (trend === "down") return <span className="text-[8px] font-black text-red-500 uppercase flex items-center gap-0.5"><ArrowDownRight size={10} /> -{label}</span>;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 123 |     return <span className="text-[8px] font-black text-[var(--text-muted)] uppercase flex items-center gap-0.5"><Minus size={10} /> Stable</span>;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 124 |   };
+      | ^^^^ The component is created during render here
+  125 |
+  126 |   return (
+  127 |     <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-10 pb-32 bg-[var(--bg)] text-[var(--text)] min-h-screen">                 react-hooks/static-components
+  216:16  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+D:\ANTI\Strux\app\(dashboard)\dashboard\page.tsx:216:16
+  214 |                 <Timer size={20} />
+  215 |               </div>
+> 216 |               <TrendIndicator trend={trends.focus} label="Minutes" />
+      |                ^^^^^^^^^^^^^^ This component is created during render
+  217 |             </div>
+  218 |             <div>
+  219 |               <h3 className="text-3xl font-black">{currentStats.totalFocusMinutes}</h3>
+
+D:\ANTI\Strux\app\(dashboard)\dashboard\page.tsx:120:26
+  118 |   }
+  119 |
+> 120 |   const TrendIndicator = ({ trend, label }: { trend: string, label: string }) => {
+      |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 121 |     if (trend === "up") return <span className="text-[8px] font-black text-emerald-500 uppercase flex items-center gap-0.5"><ArrowUpRight size={10} /> +{label}</span>;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 122 |     if (trend === "down") return <span className="text-[8px] font-black text-red-500 uppercase flex items-center gap-0.5"><ArrowDownRight size={10} /> -{label}</span>;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 123 |     return <span className="text-[8px] font-black text-[var(--text-muted)] uppercase flex items-center gap-0.5"><Minus size={10} /> Stable</span>;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 124 |   };
+      | ^^^^ The component is created during render here
+  125 |
+  126 |   return (
+  127 |     <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-10 pb-32 bg-[var(--bg)] text-[var(--text)] min-h-screen">            react-hooks/static-components
+
+D:\ANTI\Strux\app\(dashboard)\focus\page.tsx
+    4:10  warning  'Timer' is defined but never used                                                                                                                         @typescript-eslint/no-unused-vars
+    4:41  warning  'CheckCircle2' is defined but never used                                                                                                                  @typescript-eslint/no-unused-vars
+    4:73  warning  'Trash2' is defined but never used                                                                                                                        @typescript-eslint/no-unused-vars
+   19:38  error    Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
+   20:42  error    Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
+   32:36  error    Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
+   66:6   warning  React Hook useEffect has missing dependencies: 'handleTimerComplete', 'mode', and 'sessionStartTime'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  111:61  error    Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
+  211:54  error    Unexpected any. Specify a different type                                                                                                                  @typescript-eslint/no-explicit-any
+
+D:\ANTI\Strux\app\(dashboard)\habits\page.tsx
+   5:3   warning  'Plus' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+   6:42  warning  'CalendarIcon' is defined but never used                                                                        @typescript-eslint/no-unused-vars
+   7:3   warning  'LayoutDashboard' is defined but never used                                                                     @typescript-eslint/no-unused-vars
+  17:40  error    Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
+  18:36  error    Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
+  19:10  warning  'loading' is assigned a value but never used                                                                    @typescript-eslint/no-unused-vars
+  46:6   warning  React Hook useEffect has a missing dependency: 'fetchHabits'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\ANTI\Strux\app\(dashboard)\notes\page.tsx
+  11:10  warning  'loading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\ANTI\Strux\app\(dashboard)\onboarding\page.tsx
+  3:20  warning  'useEffect' is defined but never used         @typescript-eslint/no-unused-vars
+  5:10  warning  'updateUserMemory' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\ANTI\Strux\app\(dashboard)\report\page.tsx
+   4:51  warning  'Calendar' is defined but never used      @typescript-eslint/no-unused-vars
+   4:68  warning  'ArrowRight' is defined but never used    @typescript-eslint/no-unused-vars
+  14:40  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\ANTI\Strux\app\api\chat\route.ts
+   3:10  warning  'getChatResponse' is defined but never used       @typescript-eslint/no-unused-vars
+   4:48  warning  'updateUserMemory' is defined but never used      @typescript-eslint/no-unused-vars
+  24:9   warning  'memoryBlock' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  59:9   warning  'recentFacts' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\ANTI\Strux\app\landing\page.tsx
+  3:22  warning  'CheckCircle2' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\ANTI\Strux\components\chat\ChatLayout.tsx
+   4:16  warning  'TabsContent' is defined but never used   @typescript-eslint/no-unused-vars
+  14:83  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\ANTI\Strux\components\chat\ChatWindow.tsx
+   34:36  error    Unexpected any. Specify a different type            @typescript-eslint/no-explicit-any
+   97:11  error    'dateKey' is never reassigned. Use 'const' instead  prefer-const
+  160:36  warning  'node' is defined but never used                    @typescript-eslint/no-unused-vars
+  160:83  error    Unexpected any. Specify a different type            @typescript-eslint/no-explicit-any
+  161:37  warning  'match' is assigned a value but never used          @typescript-eslint/no-unused-vars
+
+D:\ANTI\Strux\components\notes\NewNoteButton.tsx
+  47:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\ANTI\Strux\components\settings\SettingsForm.tsx
+    6:8   warning  'Link' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  156:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\ANTI\Strux\components\shared\Sidebar.tsx
+  16:3   warning  'Timer' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  99:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\ANTI\Strux\components\tasks\NewTaskButton.tsx
+  47:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\ANTI\Strux\components\ui\GlobalSearch.tsx
+    6:10  warning  'cn' is defined but never used            @typescript-eslint/no-unused-vars
+   11:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  105:47  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  126:47  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  150:51  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\ANTI\Strux\components\ui\ThemeSwitcher.tsx
+  14:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\ANTI\Strux\components\ui\ThemeSwitcher.tsx:14:7
+  12 |     const savedTheme = localStorage.getItem("strux-theme") as Theme;
+  13 |     if (savedTheme) {
+> 14 |       setTheme(savedTheme);
+     |       ^^^^^^^^ Avoid calling setState() directly within an effect
+  15 |       document.documentElement.setAttribute("data-theme", savedTheme);
+  16 |     }
+  17 |   }, []);  react-hooks/set-state-in-effect
+
+D:\ANTI\Strux\components\ui\tabs.tsx
+   6:69  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  16:73  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  26:83  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  42:74  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\ANTI\Strux\lib\memory\engine.ts
+  2:10  warning  'Database' is defined but never used      @typescript-eslint/no-unused-vars
+  9:32  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\ANTI\Strux\lib\supabase\middleware.ts
+   9:9   warning  'supabase' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  18:48  warning  'options' is defined but never used            @typescript-eslint/no-unused-vars
+
+D:\ANTI\Strux\tmp_migrate.js
+  1:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\ANTI\Strux\tmp_migrate_memory.js
+  1:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+Γ£û 79 problems (44 errors, 35 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+
