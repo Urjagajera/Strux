@@ -1,4 +1,5 @@
 import { signIn } from "@/auth";
+import Link from "next/link";
 import { Milestone, CheckCircle2, Quote } from "lucide-react";
 
 export default function LoginPage() {
