@@ -176,7 +176,7 @@ The briefing should be persona-based (Strux Assistant), encouraging, and focus o
           <span className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest">vs Last Week</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card 1: Total Tasks */}
           <div className="p-6 bg-[var(--surface)] border border-[var(--border)] rounded-[2rem] space-y-4 hover:bg-[var(--surface)]/80 transition-all border-b-4 border-b-blue-500/50 shadow-sm">
             <div className="flex justify-between items-start">
@@ -216,20 +216,6 @@ The briefing should be persona-based (Strux Assistant), encouraging, and focus o
             <div>
               <h3 className="text-3xl font-black">{currentStats.notesCount}</h3>
               <p className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest">Knowledge Base</p>
-            </div>
-          </div>
-
-          {/* Card 4: Focus Time */}
-          <div className="p-6 bg-[var(--surface)] border border-[var(--border)] rounded-[2rem] space-y-4 hover:bg-[var(--surface)]/80 transition-all border-b-4 border-b-orange-500/50 shadow-sm">
-            <div className="flex justify-between items-start">
-              <div className="h-10 w-10 rounded-2xl bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/10">
-                <Timer size={20} />
-              </div>
-              <TrendIndicator trend={trends.focus} label="Minutes" />
-            </div>
-            <div>
-              <h3 className="text-3xl font-black">{currentStats.totalFocusMinutes}</h3>
-              <p className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest">Deep Work Minutes</p>
             </div>
           </div>
         </div>

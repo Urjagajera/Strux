@@ -60,9 +60,13 @@ export default async function LandingPage() {
             <span className="font-black text-xl tracking-tighter uppercase italic">Strux</span>
           </div>
           <div className="flex items-center gap-6">
-             <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--surface)] border border-[var(--border)]">
-                <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)]">{activeNow} Active Now</span>
+             <div className="hidden md:flex items-center gap-3 px-4 py-1.5 rounded-full bg-[var(--surface)] border border-[var(--border)]">
+                <div className="flex items-center gap-2">
+                  <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)]">{activeNow} Active Now</span>
+                </div>
+                <div className="h-3 w-[1px] bg-[var(--border)]" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-primary font-bold">{userCount}+ Members</span>
              </div>
              <Link 
               href="/login" 
