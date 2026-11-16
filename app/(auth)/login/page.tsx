@@ -1,4 +1,4 @@
-import { signIn } from "@/auth";
+import { signIn, demoLoginEnabled } from "@/auth";
 import Link from "next/link";
 import { Milestone, CheckCircle2, Quote } from "lucide-react";
 
@@ -84,6 +84,23 @@ export default function LoginPage() {
                 Continue with Google
               </button>
             </form>
+
+            {demoLoginEnabled && (
+              <form
+                action={async () => {
+                  "use server";
+                  await signIn("demo", { redirectTo: "/dashboard" });
+                }}
+              >
+                <button
+                  id="demo-login"
+                  className="flex w-full items-center justify-center gap-2 bg-gray-950 text-white font-bold py-3.5 px-6 rounded-2xl hover:bg-gray-800 transition-all shadow-sm"
+                >
+                  Try the demo
+                  <span className="text-xs font-bold text-gray-400">no sign-up</span>
+                </button>
+              </form>
+            )}
 
             {/* GitHub button on hold - omitting as per Step 3 instructions */}
 
